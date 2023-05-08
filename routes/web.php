@@ -13,6 +13,8 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/courses', 'Courses\CoursesController@index');
+$router->post('/courses', 'Courses\CoursesController@store');
+$router->get('/courses/{id}', 'Courses\CoursesController@show');
+$router->put('/courses/{id}', 'Courses\CoursesController@update');
+$router->delete('/courses/{id}', 'Courses\CoursesController@delete');
