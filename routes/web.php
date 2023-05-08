@@ -13,10 +13,13 @@
 |
 */
 
-$router->group(['namespace' => 'Courses', 'middleware' => 'ensure.json'], function () use ($router) {
+$router->group(['namespace' => 'Courses'], function () use ($router) {
     $router->get('/courses', 'CoursesController@index');
-    $router->post('/courses', 'CoursesController@store');
     $router->get('/courses/{id}', 'CoursesController@show');
-    $router->put('/courses/{id}', 'CoursesController@update');
     $router->delete('/courses/{id}', 'CoursesController@delete');
+
+    $router->group(['middleware' => 'ensure.json'], function () use ($router) {
+        $router->post('/courses', 'CoursesController@store');
+        $router->put('/courses/{id}', 'CoursesController@update');
+    });
 });
