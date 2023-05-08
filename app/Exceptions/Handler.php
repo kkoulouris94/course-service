@@ -10,6 +10,7 @@ use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -52,8 +53,12 @@ class Handler extends ExceptionHandler
      *
      * @throws \Throwable
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $exception): \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
     {
+        if ($exception instanceof NotAcceptableHttpException) {
+            return $this->errorResponse($exception->getMessage(), Response::HTTP_NOT_ACCEPTABLE);
+        }
+
         if ($exception instanceof HttpException)
         {
             $code = $exception->getStatusCode();

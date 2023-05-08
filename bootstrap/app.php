@@ -80,6 +80,10 @@ $app->configure('app');
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
 
+$app->routeMiddleware([
+    'ensure.json' => App\Http\Middleware\EnsureJsonMiddleware::class
+]);
+
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
